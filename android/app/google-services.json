@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "912724582568",
+    "firebase_url": "https://raspberrypi-ab822-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "raspberrypi-ab822",
+    "storage_bucket": "raspberrypi-ab822.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:912724582568:android:98c8a3b30e6bf51aeda29d",
+        "android_client_info": {
+          "package_name": "com.example.security_locker_iot"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "912724582568-8q87lkfm5aahn3gjfbeeeff93mgjkun8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAODn1oQeAPLURaoDTrWQ7-VRlNziZt70U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "912724582568-8q87lkfm5aahn3gjfbeeeff93mgjkun8.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "912724582568-lhkhdc2omttn6pr0jc4147nit04ne72k.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.securityLockerIot"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
