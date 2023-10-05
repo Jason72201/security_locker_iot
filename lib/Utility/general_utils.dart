@@ -36,4 +36,19 @@ class GeneralUtils {
       },
     );
   }
+
+  static showTemperatureDialog(BuildContext context) {
+    showDialog<String>(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+              title: const Text("Temperature Alert"),
+              content: const Text('Temperature has exceeded the limit'),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () => Navigator.pop(context, 'OK'),
+                  child: const Text('OK'),
+                ),
+              ],
+            ));
+  }
 }

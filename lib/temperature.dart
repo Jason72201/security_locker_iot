@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:security_locker_iot/Utility/general_utils.dart';
 
 class TemperatureTracking extends StatefulWidget {
   const TemperatureTracking({Key? key}) : super(key: key);
@@ -10,6 +12,7 @@ class TemperatureTracking extends StatefulWidget {
 class _TemperatureTracking extends State<TemperatureTracking> {
   bool isSwitched = false;
   String text = "";
+  final myController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -70,6 +73,8 @@ class _TemperatureTracking extends State<TemperatureTracking> {
                 padding: const EdgeInsets.only(
                     left: 30, right: 30, top: 10, bottom: 10),
                 child: TextField(
+                    maxLength: 2,
+                    controller: myController,
                     keyboardType: TextInputType.number,
                     autofocus: true,
                     style: Theme.of(context).textTheme.headline6?.apply(
@@ -82,7 +87,31 @@ class _TemperatureTracking extends State<TemperatureTracking> {
                 child: SizedBox(
                   width: widthOfScreen,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      GeneralUtils.showLoadingDialog(context);
+                      if (myController.text.isEmpty) {
+                        Navigator.pop(context);
+                        GeneralUtils.showToast("Temperature limit is empty.");
+                      } else {
+                        FirebaseFirestore db = FirebaseFirestore.instance;
+
+                        final locker = <String, String>{
+                          "temperatureLimit": myController.text.trim(),
+                        };
+
+                        db
+                            .collection("locker")
+                            .doc("yGCZLiD8yD4XAGR0mjSO7")
+                            .set(locker, SetOptions(merge: true))
+                            .onError((e, _) =>
+                                GeneralUtils.showToast("Something Went Wrong"))
+                            .then((value) {
+                          Navigator.pop(context);
+                          GeneralUtils.showToast(
+                              "Temperature limit has been set.");
+                        });
+                      }
+                    },
                     child: const Text('Save'),
                   ),
                 ),

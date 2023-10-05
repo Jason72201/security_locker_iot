@@ -69,22 +69,27 @@ class _KeypadPassword extends State<KeypadPassword> {
             ),
             leftButtonFn: () {
               GeneralUtils.showLoadingDialog(context);
-              FirebaseFirestore db = FirebaseFirestore.instance;
-
-              final locker = <String, String>{
-                "keypadPassword": text,
-              };
-
-              db
-                  .collection("locker")
-                  .doc("yGCZLiD8yD4XAGR0mjSO7")
-                  .set(locker, SetOptions(merge: true))
-                  .onError(
-                      (e, _) => GeneralUtils.showToast("Something Went Wrong"))
-                  .then((value) {
+              if (text.isEmpty) {
                 Navigator.pop(context);
-                GeneralUtils.showToast("Keypad password has been changed.");
-              });
+                GeneralUtils.showToast("Keypad password is empty.");
+              } else {
+                FirebaseFirestore db = FirebaseFirestore.instance;
+
+                final locker = <String, String>{
+                  "keypadPassword": text,
+                };
+
+                db
+                    .collection("locker")
+                    .doc("yGCZLiD8yD4XAGR0mjSO7")
+                    .set(locker, SetOptions(merge: true))
+                    .onError((e, _) =>
+                        GeneralUtils.showToast("Something Went Wrong"))
+                    .then((value) {
+                  Navigator.pop(context);
+                  GeneralUtils.showToast("Keypad password has been changed.");
+                });
+              }
             },
             rightButtonFn: () {
               if (text.isEmpty) return;

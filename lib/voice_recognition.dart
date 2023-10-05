@@ -34,7 +34,7 @@ class _VoiceRecognition extends State<VoiceRecognition> {
                   context: context,
                   builder: (BuildContext context) => AlertDialog(
                         content: const Text(
-                            'This page will be used for changing the boice recognition keyword.'),
+                            'This page will be used for changing the voice recognition keyword.'),
                         actions: <Widget>[
                           TextButton(
                             onPressed: () => Navigator.pop(context, 'OK'),
@@ -88,23 +88,29 @@ class _VoiceRecognition extends State<VoiceRecognition> {
                   child: ElevatedButton(
                     onPressed: () {
                       GeneralUtils.showLoadingDialog(context);
-                      FirebaseFirestore db = FirebaseFirestore.instance;
-
-                      final locker = <String, String>{
-                        "voiceRecognition": myController.text.trim(),
-                      };
-
-                      db
-                          .collection("locker")
-                          .doc("yGCZLiD8yD4XAGR0mjSO7")
-                          .set(locker, SetOptions(merge: true))
-                          .onError((e, _) =>
-                              GeneralUtils.showToast("Something Went Wrong"))
-                          .then((value) {
+                      if (myController.text.isEmpty) {
                         Navigator.pop(context);
                         GeneralUtils.showToast(
-                            "Keypad password has been changed.");
-                      });
+                            "Voice recognition text is empty.");
+                      } else {
+                        FirebaseFirestore db = FirebaseFirestore.instance;
+
+                        final locker = <String, String>{
+                          "voiceRecognition": myController.text.trim(),
+                        };
+
+                        db
+                            .collection("locker")
+                            .doc("yGCZLiD8yD4XAGR0mjSO7")
+                            .set(locker, SetOptions(merge: true))
+                            .onError((e, _) =>
+                                GeneralUtils.showToast("Something Went Wrong"))
+                            .then((value) {
+                          Navigator.pop(context);
+                          GeneralUtils.showToast(
+                              "Voice recognition text has been changed.");
+                        });
+                      }
                     },
                     child: const Text('Save'),
                   ),

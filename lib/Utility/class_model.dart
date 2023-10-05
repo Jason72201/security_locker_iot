@@ -7,10 +7,12 @@ class LockerInformation {
   final int? lockerNumber;
   final String? rfid;
   final double? temperature;
+  final String? temperatureLimit;
   final String? voiceRecognition;
 
-  LockerInformation(
+  LockerInformation( 
       {this.humidity,
+      this.temperatureLimit,
       this.keypadPassword,
       this.lockerID,
       this.lockerNumber,
@@ -30,12 +32,14 @@ class LockerInformation {
       lockerNumber: data?['lockerNumber'],
       rfid: data?['rfid'],
       temperature: data?['temperature'],
+      temperatureLimit: data?['temperatureLimit'],
       voiceRecognition: data?['voiceRecognition'],
     );
   }
 
   Map<String, dynamic> toFirestore() {
     return {
+      if (temperatureLimit != null) "temperatureLimit": temperatureLimit,
       if (humidity != null) "humidity": humidity,
       if (keypadPassword != null) "keypadPassword": keypadPassword,
       if (lockerID != null) "lockerID": lockerID,

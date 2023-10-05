@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:security_locker_iot/homapage.dart';
+import 'package:security_locker_iot/scan_qr_page.dart';
 
 // import 'package:fyp_book_recommendations_application/_home_page.dart';
 // import 'package:fyp_book_recommendations_application/_login_page.dart';
@@ -62,13 +62,13 @@ class _SplashScreenPage extends State<SplashScreenPage> {
   void _goToMainPage(BuildContext context) {
     Navigator.pushAndRemoveUntil(
       context,
-      MaterialPageRoute(builder: (context) => const HomePage()),
+      MaterialPageRoute(builder: (context) => const ScanQRPage()),
       (Route<dynamic> route) => false,
     );
   }
 
   // void _goToLoginPage(BuildContext context) {
-  //   Navigator.pushAndRemoveUntil(
+  //   Navigator.pushAndRemoveUntil(6
   //     context,
   //     MaterialPageRoute(builder: (context) => const LoginPage()),
   //     (Route<dynamic> route) => false,

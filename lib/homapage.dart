@@ -22,6 +22,8 @@ class _HomePage extends State<HomePage> {
   String temperature = "";
   String humidity = "";
   String? voiceRecognition;
+  String? temperatureLimit = "";
+  bool dialogShown = false;
 
   Future<void> getData() async {
     final ref =
@@ -37,6 +39,7 @@ class _HomePage extends State<HomePage> {
         lockerID = lockInformation.lockerNumber.toString();
         rfid = lockInformation.rfid;
         voiceRecognition = lockInformation.voiceRecognition;
+        temperatureLimit = lockInformation.temperatureLimit;
       });
     } else {
       GeneralUtils.showToast("Something Went Wrong");
@@ -60,7 +63,6 @@ class _HomePage extends State<HomePage> {
             child: CircularProgressIndicator(),
           ));
     }
-
     DatabaseReference ref = FirebaseDatabase.instance.ref("DHT");
 
     Stream<DatabaseEvent> humidityStream = ref.onValue;
@@ -68,7 +70,21 @@ class _HomePage extends State<HomePage> {
     humidityStream.listen((DatabaseEvent event) {
       setState(() {
         humidity = event.snapshot.value.toString().split(":")[2];
-        temperature = event.snapshot.value.toString().split(":")[1].split(",")[0];
+        temperature =
+            event.snapshot.value.toString().split(":")[1].split(",")[0];
+
+        int temperatureInt = int.parse(temperature.split(".")[0].isEmpty
+            ? "0"
+            : temperature.split(".")[0]);
+        int temeperateLimitInt = int.parse(temperatureLimit!);
+        if (!dialogShown) {
+          if (temperatureInt > temeperateLimitInt) {
+            dialogShown = true;
+            Future.delayed(const Duration(milliseconds: 100), () {
+              GeneralUtils.showTemperatureDialog(context);
+            });
+          }
+        }
       });
     });
 
@@ -102,7 +118,8 @@ class _HomePage extends State<HomePage> {
                 padding: const EdgeInsets.only(
                     top: 15, left: 15, right: 15, bottom: 10),
                 child: Container(
-                  padding: const EdgeInsets.only(top: 10, bottom: 3, left: 10),
+                  padding:
+                      const EdgeInsets.only(top: 10, bottom: 3, left: 10),
                   alignment: Alignment.centerLeft,
                   decoration: BoxDecoration(
                     color: Colors.white,
@@ -168,7 +185,8 @@ class _HomePage extends State<HomePage> {
                                         color: Colors.grey,
                                         blurRadius: 5,
                                         spreadRadius: 1,
-                                        offset: Offset(0, 2), // Shadow position
+                                        offset:
+                                            Offset(0, 2), // Shadow position
                                       ),
                                     ],
                                   ),
@@ -206,7 +224,8 @@ class _HomePage extends State<HomePage> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const KeypadPassword()),
+                                  builder: (context) =>
+                                      const KeypadPassword()),
                             );
                           },
                           child: Column(
@@ -222,7 +241,8 @@ class _HomePage extends State<HomePage> {
                                         color: Colors.grey,
                                         blurRadius: 5,
                                         spreadRadius: 1,
-                                        offset: Offset(0, 2), // Shadow position
+                                        offset:
+                                            Offset(0, 2), // Shadow position
                                       ),
                                     ],
                                   ),
@@ -286,7 +306,8 @@ class _HomePage extends State<HomePage> {
                                         color: Colors.grey,
                                         blurRadius: 5,
                                         spreadRadius: 1,
-                                        offset: Offset(0, 2), // Shadow position
+                                        offset:
+                                            Offset(0, 2), // Shadow position
                                       ),
                                     ],
                                   ),
@@ -338,7 +359,8 @@ class _HomePage extends State<HomePage> {
                                         color: Colors.grey,
                                         blurRadius: 5,
                                         spreadRadius: 1,
-                                        offset: Offset(0, 2), // Shadow position
+                                        offset:
+                                            Offset(0, 2), // Shadow position
                                       ),
                                     ],
                                   ),
