@@ -34,7 +34,7 @@ class _HomePage extends State<HomePage> {
     final lockInformation = docSnap.data();
     if (lockInformation != null) {
       setState(() {
-        lockerID = lockInformation.lockerID;
+        lockerID = lockInformation.lockerNumber.toString();
         rfid = lockInformation.rfid;
         voiceRecognition = lockInformation.voiceRecognition;
       });
